@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 function SidebarComponent() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const location = useLocation(); // Obtenez la route actuelle
+  const location = useLocation(); 
 
   const toggleSubMenu = () => {
     setIsOpen(!isOpen);
@@ -26,17 +26,16 @@ function SidebarComponent() {
             backgroundColor: '#4b4c4d',
             color: '#ffffff',
             width: '220px',
-            height: 'calc(100vh - 10px)', // Ajuste la hauteur pour éviter de cacher le footer
+            height: 'calc(100vh - 10px)', 
             position: 'fixed',
             zIndex: '1000',
-            transition: 'transform 0.3s ease', // Animation de transition
+            transition: 'transform 0.3s ease', 
           }}
         >
           <button onClick={toggleSidebar} className="btn btn-outline-light mb-1">
             <i className="fas fa-times"></i> {/* Icône pour masquer le menu */}
           </button>
-          <br />
-          <br />
+          <br /><br /><br />
           <h4 className="text-center mb-4">Menu</h4>
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">

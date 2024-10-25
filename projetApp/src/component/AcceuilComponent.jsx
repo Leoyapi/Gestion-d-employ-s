@@ -33,29 +33,7 @@ function AcceuilComponent() {
         </p>
       </section>
 
-      {/* Section fonctionnalités */}
-      <section className="features" style={{ marginLeft: '55px' }}>
-        <h2>Nos fonctionnalités</h2>
-        <div className="feature-cards">
-          <div className="feature-card">
-            <i className="fas fa-users"></i>
-            <h3>Gestion des Employés</h3>
-            <p>Ajoutez, modifiez et suivez les informations sur vos employés facilement.</p>
-          </div>
-          <div className="feature-card">
-            <i className="fas fa-chart-line"></i>
-            <h3>Suivi des Performances</h3>
-            <p>Accédez à des tableaux de bord pour analyser les performances de vos équipes.</p>
-          </div>
-          <div className="feature-card">
-            <i className="fas fa-cogs"></i>
-            <h3>Paramètres Personnalisés</h3>
-            <p>Personnalisez la plateforme pour répondre à vos besoins spécifiques.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Titre de la page */}
+       {/* Titre de la page */}
       <h2 className="my-4 text-center">Tableau de Bord</h2>
 
       {/* Conteneur pour les statistiques principales */}
@@ -98,6 +76,30 @@ function AcceuilComponent() {
           </div>
         </div>
       </div>
+
+      {/* Section fonctionnalités */}
+      <section className="features" style={{ marginLeft: '55px' }}>
+        <h2>Nos fonctionnalités</h2>
+        <div className="feature-cards">
+          <div className="feature-card">
+            <i className="fas fa-users"></i>
+            <h3>Gestion des Employés</h3>
+            <p>Ajoutez, modifiez et suivez les informations sur vos employés facilement.</p>
+          </div>
+          <div className="feature-card">
+            <i className="fas fa-chart-line"></i>
+            <h3>Suivi des Performances</h3>
+            <p>Accédez à des tableaux de bord pour analyser les performances de vos équipes.</p>
+          </div>
+          <div className="feature-card">
+            <i className="fas fa-cogs"></i>
+            <h3>Paramètres Personnalisés</h3>
+            <p>Personnalisez la plateforme pour répondre à vos besoins spécifiques.</p>
+          </div>
+        </div>
+      </section>
+
+
     </div>
   );
 }
