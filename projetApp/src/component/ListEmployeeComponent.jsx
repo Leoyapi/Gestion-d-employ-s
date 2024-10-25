@@ -71,9 +71,9 @@ const saveNewEmployee = (e) => {
           console.error("Erreur lors de l'enregistrement:", err);
 
           if (err.response && err.response.data && err.response.data.message) {
-              toast.error(err.response.data.message); // Message d'erreur spécifique avec Toast
+              toast.error(err.response.data.message); 
           } else {
-              toast.error("Erreur,Votre email existe déjà."); // Message d'erreur par défaut avec Toast
+              toast.error("Erreur,Votre email existe déjà."); 
           }
       });
 };
@@ -93,7 +93,7 @@ const saveNewEmployee = (e) => {
         .then(() => {
             setShowModal(false);
             setEditMode(false);
-            toast.success("L'employé a été modifié avec succès."); // Message de succès avec Toast
+            toast.success("L'employé a été modifié avec succès."); 
             return listEmployees();
         })
         .then((response) => {
@@ -102,7 +102,7 @@ const saveNewEmployee = (e) => {
         })
         .catch((err) => {
             console.error("Erreur lors de la modification:", err);
-            toast.error("Une erreur s'est produite lors de la modification de l'employé."); // Message d'erreur avec Toast
+            toast.error("Une erreur s'est produite lors de la modification de l'employé."); 
         });
 };
 
@@ -117,7 +117,7 @@ const saveNewEmployee = (e) => {
   const confirmDelete = () => {
     deleteEmployee(employeeToDelete)
         .then(() => {
-            toast.success("L'employé a été supprimé avec succès."); // Message de succès avec Toast
+            toast.success("L'employé a été supprimé avec succès."); 
             setShowDeleteModal(false);
             return listEmployees();
         })
@@ -127,7 +127,7 @@ const saveNewEmployee = (e) => {
         })
         .catch((err) => {
             console.error("Erreur lors de la suppression:", err);
-            toast.error("Une erreur s'est produite lors de la suppression de l'employé."); // Message d'erreur avec Toast
+            toast.error("Une erreur s'est produite lors de la suppression de l'employé."); 
         });
 };
 

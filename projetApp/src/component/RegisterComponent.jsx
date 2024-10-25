@@ -19,33 +19,35 @@ function RegisterComponent() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  // Gestion de la soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// Gestion de la soumission du formulaire
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Empêche le rechargement de la page
 
-    try {
-      const response = await registerUser(user);
-      console.log("Réponse de l'API :", response); // Vérifiez ici
-      toast.success('Inscription réussie ! Redirection en cours...'); // Afficher un toast de succès
+  // Validation basique (si nécessaire)
+  if (!user.username || !user.email || !user.password) {
+    toast.error("Veuillez remplir tous les champs.");
+    return;
+  }
 
-      // Redirection vers une autre page après réussite
-      setTimeout(() => navigate("/login"), 2000); 
-    } catch (error) {
-      console.error("Erreur lors de l'inscription", error);
-      // Vérifiez l'objet d'erreur
-      if (error.response) {
-        console.log("Détails de l'erreur :", error.response); // Détails supplémentaires
-        toast.error(error.response.data.message || "Une erreur est survenue lors de l'inscription. Vérifiez vos informations et réessayez."); // Afficher un toast d'erreur
-      } else if (error.request) {
-        toast.error("Aucune réponse reçue du serveur. Veuillez réessayer plus tard."); // Afficher un toast d'erreur
-      } else {
-        toast.error("Une erreur est survenue. Veuillez réessayer."); // Afficher un toast d'erreur
-      }
-    }
-  };
+  try {
+    const response = await registerUser(user); // Appel à la fonction d'enregistrement
+    console.log("Réponse de l'API :", response);
+    toast.success('Inscription réussie ! Redirection en cours...');
+
+    // Redirection après un délai pour que l'utilisateur puisse voir le message
+    setTimeout(() => navigate("/login"), 2000);
+  } catch (error) {
+    console.error("Erreur lors de l'inscription", error);
+    const message = error.response?.data?.message || "Une erreur est survenue lors de l'inscription.";
+    toast.error(message); // Affiche un message d'erreur
+  }
+};
+
+
 
   return (
     <div className="container" style={{ width: '50%' }}>
+      <br />
       <br />
       <br />
       <br />
@@ -101,7 +103,7 @@ function RegisterComponent() {
           </form>
         </div>
       </div>
-      <ToastContainer /> {/* Ajouter le composant ToastContainer ici */}
+      <ToastContainer /> {/* le composant ToastContainer  */}
     </div>
   );
 }

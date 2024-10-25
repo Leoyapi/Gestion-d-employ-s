@@ -38,13 +38,23 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 6.7%; /* Ajuste à 100% pour occuper toute la largeur de la page */
+  height: 70px; /* Ajuste si nécessaire */
   z-index: 1000;
   background-color: #343a40; /* Couleur de fond sombre */
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour séparer visuellement l'en-tête */
-  padding-left: 50px; /* Ajoute un padding à gauche pour le contenu */
-  padding-top: 10px; /* Ajoute un peu d'espace en haut pour le contenu */
-  padding-bottom: 10px; /* Ajoute un peu d'espace en bas pour le contenu */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Liens de navigation */
+.navbar-nav .nav-link {
+  color: white; /* Couleur des liens */
+  padding: 15px; /* Ajuste pour un meilleur clic */
+  display: flex;
+  align-items: center; /* Aligne les icônes avec le texte */
+  transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #adb5bd; /* Couleur au survol */
 }
 
 /* Ajustement pour les éléments de la barre de navigation */
@@ -52,23 +62,16 @@ header {
   margin: 0; /* Supprime la marge par défaut */
 }
 
-
-
 /* Contenu principal */
 .main-content {
-  margin-top: 30px; /* Ajuste la valeur en fonction de la hauteur de ton header */
+  margin-top: 80px; /* Ajuste la valeur en fonction de la hauteur de ton header */
   padding: 20px; /* Ajoute de l'espace autour du contenu principal */
 }
 
-
 /* Styles de navigation */
 .nav-link {
-  display: flex;
-  align-items: center; /* Aligne les icônes avec le texte */
   padding: 10px 15px; /* Ajoute de l'espace autour des liens */
   border-radius: 5px; /* Arrondir les coins */
-  transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
-  color: #343a40; /* Couleur de texte foncé */
 }
 
 .nav-link:hover {
