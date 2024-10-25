@@ -40,6 +40,17 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.findById(id); // Assurez-vous que la méthode findById est implémentée dans le service
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne 404 si l'utilisateur n'est pas trouvé
+        }
+    }
+
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody User user) {
         System.out.println("Tentative de connexion pour l'utilisateur : " + user.getEmail());
@@ -48,14 +59,14 @@ public class UserController {
         // Vérifiez si l'utilisateur existe
         if (existingUser == null) {
             System.out.println("Utilisateur introuvable: " + user.getEmail());
-            return new ResponseEntity<>(new LoginResponse(null, "Invalid email or password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new LoginResponse(null, "Invalid email or password", null), HttpStatus.UNAUTHORIZED);
         }
 
         // Vérifiez si le mot de passe est correct
         boolean isPasswordMatch = passwordEncoder.matches(user.getPassword(), existingUser.getPassword());
         if (!isPasswordMatch) {
             System.out.println("Mot de passe incorrect pour: " + user.getEmail());
-            return new ResponseEntity<>(new LoginResponse(null, "Invalid email or password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new LoginResponse(null, "Invalid email or password", null), HttpStatus.UNAUTHORIZED);
         }
 
         // Si les identifiants sont valides, générez un token JWT
@@ -63,8 +74,9 @@ public class UserController {
         String token = jwtUtil.generateToken(existingUser.getEmail(), roles);
         System.out.println("Connexion réussie pour: " + user.getEmail());
 
-        // Renvoie le token dans la réponse
-        return new ResponseEntity<>(new LoginResponse(token, "Connexion réussie"), HttpStatus.OK);
+        // Renvoie le token et le nom d'utilisateur dans la réponse
+        return new ResponseEntity<>(new LoginResponse(token, "Connexion réussie", existingUser.getUsername()), HttpStatus.OK);
     }
+
 
 }

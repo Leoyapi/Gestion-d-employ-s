@@ -29,5 +29,10 @@ public class UserService {
         return userRepository.findAll(); // Méthode pour récupérer tous les utilisateurs
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null); // Retourne l'utilisateur ou null si non trouvé
+    }
+
+
 
 }
