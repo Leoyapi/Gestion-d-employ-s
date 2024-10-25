@@ -1,0 +1,93 @@
+.acceuil-container {
+    font-family: 'Arial', sans-serif;
+    padding: 50px;
+  }
+  
+  .about {
+    background-color: #f9f9f9;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .about p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .features {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .features h2 {
+    margin-bottom: 40px;
+    font-size: 2rem;
+  }
+  
+  .feature-cards {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .feature-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .feature-card h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .feature-card i {
+    font-size: 2.5rem;
+    color: #007bff;
+  }
+
+  .card-custom-employees {
+    background-color: #007bff; /* Couleur pour le nombre total d'employés */
+    color: white; /* Couleur du texte */
+  }
+  
+  .card-custom-projects {
+    background-color: #28a745; /* Couleur pour les projets en cours */
+    color: white;
+  }
+  
+  .card-custom-tasks {
+    background-color: #ffc107; /* Couleur pour les nouvelles tâches */
+    color: white;
+  }
+  
+  .card-custom-messages {
+    background-color: #dc3545; /* Couleur pour les messages non lus */
+    color: white;
+  }
+  
+  /* Si vous souhaitez ajuster la couleur du texte des titres ou du contenu, vous pouvez ajouter des styles supplémentaires */
+  .card-title {
+    color: white; /* Pour s'assurer que le texte des titres est blanc */
+  }
+    
+  

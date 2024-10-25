@@ -1,0 +1,98 @@
+/* Styles de base */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Police de caractère pour une meilleure lisibilité */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Conteneur principal */
+.container-fluid {
+  flex: 1; /* Permet au conteneur de prendre l'espace restant */
+  overflow-y: auto; /* Permet le défilement vertical */
+  padding: 10px; /* Ajoute de l'espace autour du contenu */
+  background-color: #f8f9fa; /* Couleur de fond pour contraster avec la sidebar et l'en-tête */
+}
+
+/* Pied de page */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #343a40; /* Couleur de fond sombre */
+  color: white;
+  text-align: center;
+  line-height: 60px; /* Aligne le texte verticalement */
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour séparer visuellement le footer */
+}
+
+/* En-tête */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6.7%; /* Ajuste à 100% pour occuper toute la largeur de la page */
+  z-index: 1000;
+  background-color: #343a40; /* Couleur de fond sombre */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour séparer visuellement l'en-tête */
+  padding-left: 50px; /* Ajoute un padding à gauche pour le contenu */
+  padding-top: 10px; /* Ajoute un peu d'espace en haut pour le contenu */
+  padding-bottom: 10px; /* Ajoute un peu d'espace en bas pour le contenu */
+}
+
+/* Ajustement pour les éléments de la barre de navigation */
+.navbar {
+  margin: 0; /* Supprime la marge par défaut */
+}
+
+
+
+/* Contenu principal */
+.main-content {
+  margin-top: 30px; /* Ajuste la valeur en fonction de la hauteur de ton header */
+  padding: 20px; /* Ajoute de l'espace autour du contenu principal */
+}
+
+
+/* Styles de navigation */
+.nav-link {
+  display: flex;
+  align-items: center; /* Aligne les icônes avec le texte */
+  padding: 10px 15px; /* Ajoute de l'espace autour des liens */
+  border-radius: 5px; /* Arrondir les coins */
+  transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
+  color: #343a40; /* Couleur de texte foncé */
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Bleu clair au survol */
+}
+
+.nav-link.active {
+  background-color: rgba(0, 123, 255, 0.3); /* Bleu plus prononcé pour l'élément actif */
+  color: #ffffff; /* Assure que le texte reste visible sur l'élément actif */
+}
+
+/* Icônes */
+.nav-link i {
+  margin-right: 10px; /* Espacement entre l'icône et le texte */
+}
+
+/* Media Queries pour la responsivité */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* La barre latérale occupe toute la largeur sur les petits écrans */
+    height: auto; /* Permet à la barre latérale de s'ajuster à la taille de l'écran */
+  }
+
+  .main-content {
+    margin-top: 60px; /* Ajuste la marge pour les petits écrans */
+  }
+}
