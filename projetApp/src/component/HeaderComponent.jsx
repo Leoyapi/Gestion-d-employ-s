@@ -12,7 +12,11 @@ function HeaderComponent() {
   const handleLogout = () => {
     logoutUser();
     localStorage.removeItem('username');
+<<<<<<< HEAD
     navigate("/login"); 
+=======
+    navigate("/login"); // Utilise navigate pour rediriger
+>>>>>>> 44d5b759bf1f9a7b5020224461ff2b0fea989bc6
   };
 
   return (
@@ -38,10 +42,14 @@ function HeaderComponent() {
               {token ? (
                 <>
                   <li className="nav-item">
+<<<<<<< HEAD
                     <span className="nav-link" style={{ marginRight: '10px' }}>
                       <i className="fa-solid fa-circle-user" style={{ color: 'green', marginRight: '7px' }}></i>
                       Hello, {username} 
                     </span>
+=======
+                    <span className="nav-link" style={{ marginRight: '10px' }}>Bonjour, {username}</span>
+>>>>>>> 44d5b759bf1f9a7b5020224461ff2b0fea989bc6
                   </li>
                   <li className="nav-item">
                     <button className="nav-link btn" onClick={handleLogout}>

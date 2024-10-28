@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from '../services/UserService'; 
 import { ToastContainer, toast } from 'react-toastify'; 
-import { Spinner } from 'react-bootstrap'; // Importer le spinner
+import { Spinner } from 'react-bootstrap'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 function LoginComponent() {
