@@ -19,6 +19,8 @@ public class User {
     private String email;
     private String password;
     private String username;
+    private String firstName;
+    private String lastName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles; // Liste des rôles de l'utilisateur

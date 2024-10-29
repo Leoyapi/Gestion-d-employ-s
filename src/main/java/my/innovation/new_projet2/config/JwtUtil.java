@@ -18,13 +18,25 @@ import java.util.Map;
 public class JwtUtil {
 
     @Value("${jwt.secret}")
-    private String secretKey; // Use property file or environment variable for the secret key
+    private String secretKey;
 
-    @Value("${jwt.expiration:36000000}") // Default expiration time set to 10 hours
+    @Value("${jwt.expiration:36000000}")
     private long expirationTime;
 
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+
+    public String extractUserId(String token) {
+        return extractAllClaims(token).get("userId", String.class);
+    }
+
+    public String extractFirstName(String token) {
+        return extractAllClaims(token).get("firstName", String.class);
+    }
+
+    public String extractLastName(String token) {
+        return extractAllClaims(token).get("lastName", String.class);
     }
 
     private Claims extractAllClaims(String token) {
@@ -34,10 +46,13 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
+            // Log or handle the exception accordingly
             throw new RuntimeException("Token has expired", e);
         } catch (SignatureException e) {
+            // Log or handle the exception accordingly
             throw new RuntimeException("Invalid JWT signature", e);
         } catch (Exception e) {
+            // Log or handle the exception accordingly
             throw new RuntimeException("Invalid token", e);
         }
     }
@@ -51,9 +66,12 @@ public class JwtUtil {
         return extractAllClaims(token).getExpiration().before(new Date());
     }
 
-    public String generateToken(String username, List<String> roles) {
+    public String generateToken(String username, List<String> roles, String userId, String firstName, String lastName) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", roles); // Adding roles or any other info
+        claims.put("roles", roles);
+        claims.put("userId", userId);
+        claims.put("firstName", firstName);
+        claims.put("lastName", lastName);
         return createToken(claims, username);
     }
 
@@ -62,8 +80,8 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // expiration configurable
-                .signWith(SignatureAlgorithm.HS256, secretKey) // clé secrète pour la signature
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 }

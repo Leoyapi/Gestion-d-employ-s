@@ -66,17 +66,18 @@ public class SecurityConfig {
                         // Routes publiques accessibles sans authentification
                         .requestMatchers("/api/register", "/api/login", "/api/users").permitAll()
 
-                        // Autoriser toutes les requêtes GET sur les employés sans authentification
-                        .requestMatchers(HttpMethod.GET, "/api/employees", "/api/employees/*").permitAll()
+                        // Autoriser toutes les requêtes GET  sans authentification
+                        .requestMatchers(HttpMethod.GET, "/api/employees", "/api/employees/*",
+                                "/api/departments","/api/departments/*","/api/demandes-conge","/api/demandes-conge/*").permitAll()
 
-                        // Autoriser POST sur /api/employees sans authentification
-                        .requestMatchers(HttpMethod.POST, "/api/employees").permitAll()
+                        // Autoriser POST sans authentification
+                        .requestMatchers(HttpMethod.POST, "/api/employees","/api/demandes-conge","/api/departments").permitAll()
 
-                        // Autoriser PUT sur /api/employees/* sans authentification
-                        .requestMatchers(HttpMethod.PUT, "/api/employees/*").permitAll()
+                        // Autoriser PUT  sans authentification
+                        .requestMatchers(HttpMethod.PUT, "/api/employees/*","/api/departments/*","/api/demandes-conge/*").permitAll()
 
-                        // Autoriser DELETE sur /api/employees/* sans authentification
-                        .requestMatchers(HttpMethod.DELETE, "/api/employees/*").authenticated()
+                        //  DELETE   authentification
+                        .requestMatchers(HttpMethod.DELETE, "/api/employees/*","/api/demandes-conge/*","/api/departments/*").authenticated()
 
                         // Exiger une authentification pour toutes les autres requêtes
                         .anyRequest().authenticated()

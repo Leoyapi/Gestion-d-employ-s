@@ -1,10 +1,11 @@
 package my.innovation.new_projet2.entity;
 
 import jakarta.persistence.*;
-
+import lombok.Data;
 
 @Entity
 @Table(name = "roles")
+@Data // Lombok générera automatiquement les getters et setters
 public class Role {
 
     @Id
@@ -13,20 +14,11 @@ public class Role {
 
     private String name; // nom du rôle (ex: "ADMIN", "USER", etc.)
 
-    // Getters et Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

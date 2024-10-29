@@ -69,14 +69,18 @@ public class UserController {
             return new ResponseEntity<>(new LoginResponse(null, "Invalid email or password", null), HttpStatus.UNAUTHORIZED);
         }
 
-        // Si les identifiants sont valides, générez un token JWT
+        // Si les identifiants sont valides, générez un token JWT avec des réclamations personnalisées
         List<String> roles = existingUser.getRoles();
-        String token = jwtUtil.generateToken(existingUser.getEmail(), roles);
+        String token = jwtUtil.generateToken(existingUser.getEmail(), roles,
+                existingUser.getId().toString(),
+                existingUser.getFirstName(),
+                existingUser.getLastName());
         System.out.println("Connexion réussie pour: " + user.getEmail());
 
         // Renvoie le token et le nom d'utilisateur dans la réponse
         return new ResponseEntity<>(new LoginResponse(token, "Connexion réussie", existingUser.getUsername()), HttpStatus.OK);
     }
+
 
 
 }

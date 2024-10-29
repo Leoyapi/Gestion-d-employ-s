@@ -1,20 +1,20 @@
 package my.innovation.new_projet2.service;
 
 import my.innovation.new_projet2.entity.User;
+import my.innovation.new_projet2.exception.ResourceNotFoundException;
 import my.innovation.new_projet2.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -30,9 +30,15 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElse(null); // Retourne l'utilisateur ou null si non trouvé
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé avec l'ID: " + id));
     }
 
-
-
+    public User updateUser(Long id, User userDetails) {
+        User user = findById(id); // Cette méthode lancera une exception si l'utilisateur n'est pas trouvé
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(passwordEncoder.encode(userDetails.getPassword())); // Ne pas encoder le mot de passe si le mot de passe n'a pas changé
+        // Mettez à jour d'autres champs si nécessaire
+        return userRepository.save(user);
+    }
 }

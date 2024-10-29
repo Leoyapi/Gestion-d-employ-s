@@ -78,6 +78,17 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version> <!-- ou une version plus récente si disponible -->
 		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version> <!-- Vérifiez si une version plus récente est disponible -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
 	</dependencies>
 
