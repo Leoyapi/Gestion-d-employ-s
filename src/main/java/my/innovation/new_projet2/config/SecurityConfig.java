@@ -68,36 +68,36 @@ public class SecurityConfig {
 
                         // Autoriser toutes les requêtes GET  sans authentification
                         .requestMatchers(HttpMethod.GET, "/api/employees", "/api/employees/*",
-<<<<<<< HEAD
-                                "/api/departments","/api/departments/*","/api/demandes-conge","/api/demandes-conge/*").permitAll()
+                        <<<<<<< HEAD
+        "/api/departments","/api/departments/*","/api/demandes-conge","/api/demandes-conge/*").permitAll()
 
-                        // Autoriser POST sans authentification
-                        .requestMatchers(HttpMethod.POST, "/api/employees","/api/demandes-conge","/api/departments").permitAll()
+                // Autoriser POST sans authentification
+                .requestMatchers(HttpMethod.POST, "/api/employees","/api/demandes-conge","/api/departments").permitAll()
 
-                        // Autoriser PUT  sans authentification
-                        .requestMatchers(HttpMethod.PUT, "/api/employees/*","/api/departments/*","/api/demandes-conge/*").permitAll()
+                // Autoriser PUT  sans authentification
+                .requestMatchers(HttpMethod.PUT, "/api/employees/*","/api/departments/*","/api/demandes-conge/*").permitAll()
 
-                        //  DELETE   authentification
-                        .requestMatchers(HttpMethod.DELETE, "/api/employees/*","/api/demandes-conge/*","/api/departments/*").authenticated()
-=======
-                                "/api/departments","/api/departments/*","/api/demandes-conges","/api/demandes-conge/*").permitAll()
+                //  DELETE   authentification
+                .requestMatchers(HttpMethod.DELETE, "/api/employees/*","/api/demandes-conge/*","/api/departments/*").authenticated()
+                =======
+        "/api/departments","/api/departments/*","/api/demandes-conge","/api/demandes-conge/*").permitAll()
 
-                        // Autoriser POST sans authentification
-                        .requestMatchers(HttpMethod.POST, "/api/employees","/api/demandes-conges","/api/departments").permitAll()
+                // Autoriser POST sans authentification
+                .requestMatchers(HttpMethod.POST, "/api/employees","/api/demandes-conge","/api/departments").permitAll()
 
-                        // Autoriser PUT  sans authentification
-                        .requestMatchers(HttpMethod.PUT, "/api/employees/*","/api/departments/*","/api/demandes-conges/*").permitAll()
+                // Autoriser PUT  sans authentification
+                .requestMatchers(HttpMethod.PUT, "/api/employees/*","/api/departments/*","/api/demandes-conge/*").permitAll()
 
-                        //  DELETE   authentification
-                        .requestMatchers(HttpMethod.DELETE, "/api/employees/*","/api/demandes-conges/*","/api/departments/*").authenticated()
->>>>>>> aaf4994 (creation de congé et departement)
+                //  DELETE   authentification
+                .requestMatchers(HttpMethod.DELETE, "/api/employees/*","/api/demandes-conge/*","/api/departments/*").authenticated()
+                >>>>>>> aaf4994 (creation de congé et departement)
 
-                        // Exiger une authentification pour toutes les autres requêtes
-                        .anyRequest().authenticated()
+                // Exiger une authentification pour toutes les autres requêtes
+                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Gestion des sessions en mode stateless (pas de sessions persistantes)
-                );
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Gestion des sessions en mode stateless (pas de sessions persistantes)
+        );
 
         // Ajout du filtre JWT pour vérifier le token avant les filtres de sécurité par défaut
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-<<<<<<< HEAD
+
 @RequestMapping("/api/demandes-conge")
-=======
-@RequestMapping("/api/demandes-conges")
->>>>>>> aaf4994 (creation de congé et departement)
 @AllArgsConstructor
 @Validated
 public class DemandCongeController {
