@@ -146,7 +146,7 @@ const saveNewEmployee = (e) => {
   <div className="mb-3">
     <button
       className="btn btn-primary"
-      style={{ marginLeft: '50px' }} // Ajoute une marge à gauche
+      style={{ marginLeft: '50px' }} 
       onClick={() => {
         setShowModal(true);
         setEditMode(false);
@@ -157,11 +157,11 @@ const saveNewEmployee = (e) => {
     </button>
   </div>
     {/* Employee Table */}
-    <div className="table-container" style={{width: '115%', margin: '0 auto' }}>
+    <div className="table-container" style={{width: '114%', margin: '0 auto' }}>
         <table className="table table-striped table-bordered"
           style={{
             margin: '0 auto',
-            width: '95%', // Augmentation de la largeur du tableau
+            width: '95%', 
           }}
         >
           <thead style={{ position: 'sticky', top: '0', backgroundColor: '#fff', zIndex: '1' }}>
