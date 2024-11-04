@@ -33,7 +33,7 @@ const ListEmployeeComponent = () => {
         const sortedEmployees = response.sort((a, b) => b.id - a.id); // Trier par ID décroissant
         setEmployees(sortedEmployees); // Mettre à jour l'état avec la liste triée
     }) // Mettre à jour l'état avec les employés récupérés
-      .catch(() => toast.error("Erreur lors de la récupération des employés"));
+      .catch(() => toast.error("Erreur de récupération des employés"));
   }, []);  // Le tableau vide [] signifie que l'effet se déclenche seulement lors du premier rendu
 
   // Fonction pour gérer les changements dans les champs du formulaire
@@ -157,48 +157,50 @@ const saveNewEmployee = (e) => {
     </button>
   </div>
     {/* Employee Table */}
-    <div className="table-container" style={{width: '114%', margin: '0 auto' }}>
-        <table className="table table-striped table-bordered"
-          style={{
-            margin: '0 auto',
-            width: '95%', 
-          }}
-        >
-          <thead style={{ position: 'sticky', top: '0', backgroundColor: '#fff', zIndex: '1' }}>
-            <tr>
-              <th className="text-center">N°</th>
-              <th className="text-center">Nom</th>
-              <th className="text-center">Prénom</th>
-              <th className="text-center">Email</th>
-              <th className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentEmployees.length > 0 ? (
-              currentEmployees.map((employee, index) => (
-                <tr key={employee.id}>
-                  <td className="text-center">{indexOfFirstEmployee + index + 1}</td>
-                  <td className="text-center">{employee.firstName}</td>
-                  <td className="text-center">{employee.lastName}</td>
-                  <td className="text-center">{employee.email}</td>
-                  <td className="text-center">
-                    <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(employee)}>
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(employee.id)}>
-                      <i className="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center">Aucun employé trouvé</td>
+    <div className="table-container" style={{ width: '114%', margin: '0 auto' }}>
+      <table
+        className="table table-striped table-bordered"
+        style={{
+          margin: '0 auto',
+          width: '95%',
+        }}
+      >
+        <thead style={{ position: 'sticky', top: '0', backgroundColor: '#fff', zIndex: '1' }}>
+          <tr>
+            <th className="text-center">N°</th>
+            <th className="text-center">Nom</th>
+            <th className="text-center">Prénom</th>
+            <th className="text-center">Email</th>
+            <th className="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentEmployees.length > 0 ? (
+            currentEmployees.map((employee, index) => (
+              <tr key={employee.id} className="table-row">
+                <td className="text-center">{indexOfFirstEmployee + index + 1}</td>
+                <td className="text-center">{employee.firstName}</td>
+                <td className="text-center">{employee.lastName}</td>
+                <td className="text-center">{employee.email}</td>
+                <td className="text-center">
+                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(employee)}>
+                    <i className="fas fa-edit"></i>
+                  </button>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(employee.id)}>
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                </td>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="text-center">Aucun employé trouvé</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+
             {/* Pagination */}
       <div className="pagination justify-content-center mt-3">
         {Array.from({ length: Math.ceil(employees.length / employeesPerPage) }, (_, i) => (
@@ -216,7 +218,7 @@ const saveNewEmployee = (e) => {
 
       {/* Modale de suppression */}
       {showDeleteModal && (
-        <div className="modal show d-block" tabIndex="-1">
+        <div className="modal show d-block custom-modal-overlay" tabIndex="-1">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -238,10 +240,10 @@ const saveNewEmployee = (e) => {
      {/* Modale d'ajout/édition */}
       
       {showModal && (
-        <div className="modal show d-block" tabIndex="-1" >
-          <div className="modal-dialog" >
-            <div className="modal-content" style={{width:'85%'}}>
-              <div className="modal-header" style={{background:'#d7e3e3'}}>
+        <div className="modal show d-block custom-modal-overlay" tabIndex="-1" >
+          <div className="modal-dialog modal-dialog-centered" >
+            <div className="modal-content">
+              <div className="modal-header" >
                 <h5 className="modal-title">{editMode ? 'Modifier un employé' : 'Ajouter un nouvel employé'}</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
@@ -280,16 +282,19 @@ const saveNewEmployee = (e) => {
                       required
                     />
                   </div> 
-                    <button type="submit" className="btn btn-success" style={{ marginRight: '10px' }}>
+                  <div className="modal-footer">
+                    <button type="submit" className="btn btn-success">
                       <i className="fa-solid fa-square-check"></i>
                       {editMode ? 'Modifier' : 'Enregistrer'}
                     </button>
-                    <button type="submit" className="btn btn-secondary"                
-                          onClick={(event) => {
-                            event.preventDefault(); // Empêche la soumission si ce bouton est cliqué
-                            setShowModal(false);
-                          }} > Fermer 
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Fermer
                     </button>
+                  </div>
                 </form>
               </div>
             </div>

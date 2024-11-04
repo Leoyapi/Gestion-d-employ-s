@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importer Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { registerUser } from '../services/UserService'; 
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'; 

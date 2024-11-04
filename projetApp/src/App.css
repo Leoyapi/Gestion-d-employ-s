@@ -99,3 +99,76 @@ header {
     margin-top: 60px; /* Ajuste la marge pour les petits écrans */
   }
 }
+
+/* Ajuste la modaledddddddddddddddddddd */
+
+/* Couche de fond semi-transparente */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+/* Contenu de la modale */
+.modal-content {
+  max-width: 600px; /* Largeur maximale de la modale */
+  border-radius: 10px; /* Coins arrondis */
+  overflow: hidden; /* Évite le débordement */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour profondeur */
+}
+/* Entête de la modale */
+.modal-header {
+  background-color: #f1f1f1; /* Couleur de fond de l'en-tête */
+  border-bottom: 1px solid #ddd; /* Bordure en bas */
+  padding: 15px; /* Espacement intérieur */
+}
+
+/* Titre de la modale */
+.modal-title {
+  font-size: 1.28rem; /* Taille de police */
+  font-weight: 600; /* Épaisseur du texte */
+}
+
+/* Bouton de fermeture */
+.btn-close {
+  border: none;
+  background: transparent;
+  color: #666; /* Couleur du bouton */
+}
+
+/* Corps de la modale */
+.modal-body {
+  padding: 20px; /* Espacement intérieur */
+}
+
+/* Pied de la modale */
+.modal-footer {
+  padding: 15px; /* Espacement intérieur */
+  display: flex; /* Flexbox pour alignement */
+  justify-content: flex-end; /* Alignement à droite */
+}
+
+.table-row {
+  transition: background-color 0.9s ease; /* Transition douce */
+}
+
+.table-row:hover {
+  background-color: rgba(101, 142, 187, 0.2); /* Couleur de fond lors du survol (légèrement bleuté) */
+  cursor: pointer; /* Change le curseur pour indiquer l'interaction */
+}
+
+/* Optionnel : ajoutez un effet pour les boutons */
+.table-row button {
+  transition: transform 0.2s ease; /* Transition pour les boutons */
+}
+
+.table-row button:hover {
+  transform: scale(1.2); /* Agrandit légèrement le bouton au survol */
+}

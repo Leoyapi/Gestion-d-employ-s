@@ -15,7 +15,7 @@ function AcceuilComponent() {
       .then((response) => {
         setEmployeeCount(response.length); // Nombre total d'employés
       })
-      .catch(() => toast.error("Erreur lors de la récupération du nombre d'employés"));
+      .catch(() => toast.error("Erreur de récupération du nombre d'employés"));
   }, []);
 
   return (

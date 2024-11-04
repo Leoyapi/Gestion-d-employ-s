@@ -12,7 +12,7 @@ export const listEmployees = async (token) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Erreur lors de la récupération des employés:", error);
+        console.error("Liste d'employés non trouvées:", error);
         throw error;
     }
 };

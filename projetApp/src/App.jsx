@@ -22,7 +22,7 @@ function App() {
           <main className="flex-grow-1">
             <Routes>
               <Route path='/acceuil' element={<AcceuilComponent/>} ></Route>
-              <Route path='/' element={<ListEmployeeComponent/>} />
+              <Route path='/' element={<LoginComponent/>} />
               <Route path='/employees' element={<ListEmployeeComponent/>} />
               <Route path='/add-employee' element={<EmployeeComponent/>} />
               <Route path="/register" element={<RegisterComponent/>} /> 
