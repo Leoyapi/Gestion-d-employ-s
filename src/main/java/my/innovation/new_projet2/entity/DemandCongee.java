@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(name = "demandes_conge")
-public class DemandConge {
+public class DemandCongee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

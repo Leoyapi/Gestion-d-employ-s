@@ -35,30 +35,46 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = extractToken(authorizationHeader);
         String username = null;
 
-        if (token != null) {
-            username = jwtUtil.extractUsername(token);
-        }
-
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-            if (jwtUtil.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            } else {
-                logger.warn("Invalid token for user: {}", username);
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
-                return;
+        try {
+            if (token != null) {
+                username = jwtUtil.extractUsername(token);
             }
-        }
 
-        filterChain.doFilter(request, response);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                if (jwtUtil.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                } else {
+                    logger.warn("Invalid token for user: {}", username);
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
+                    return;
+                }
+            }
+            filterChain.doFilter(request, response);
+
+        } catch (io.jsonwebtoken.MalformedJwtException e) {
+            logger.error("Malformed JWT token", e);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Malformed JWT token");
+        } catch (Exception e) {
+            logger.error("Error in JWT processing", e);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT processing error");
+        }
     }
 
     private String extractToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return authorizationHeader.substring(7);
+            String token = authorizationHeader.substring(7);
+            if (token.isEmpty()) {
+                logger.warn("Empty JWT token");
+                return null;
+            }
+            return token;
         }
+        logger.warn("Authorization header missing or does not start with Bearer ");
         return null;
     }
+
+
 }

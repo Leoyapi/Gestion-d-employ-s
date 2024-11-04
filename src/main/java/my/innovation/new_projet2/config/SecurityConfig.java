@@ -58,9 +58,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/register", "/api/login", "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/employees", "/api/employees/*",
                                 "/api/departments", "/api/departments/*",
-                                "/api/demandes-conge", "/api/demandes-conge/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/employees", "/api/demandes-conge", "/api/departments").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/employees/*", "/api/departments/*", "/api/demandes-conge/*").permitAll()
+                                "/api/demandes-conge", "/api/demandes-conge/*").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/employees", "/api/demandes-conge", "/api/departments").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/employees/*", "/api/departments/*", "/api/demandes-conge/*").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/employees/*", "/api/demandes-conge/*", "/api/departments/*").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -87,7 +87,6 @@ public class SecurityConfig {
     }
 
 }
-
 
 //    @Bean
 //    public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {

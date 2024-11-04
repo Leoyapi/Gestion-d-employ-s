@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DemandCongeDto {
+public class DemandCongeeDto {
     private Long id; // Identifiant unique de la demande
     private Long employeeId; // Identifiant de l'employé
     private Long departmentId; // Identifiant du département

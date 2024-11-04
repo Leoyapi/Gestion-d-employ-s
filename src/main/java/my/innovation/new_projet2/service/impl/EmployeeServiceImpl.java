@@ -6,7 +6,7 @@ import my.innovation.new_projet2.entity.Department;
 import my.innovation.new_projet2.entity.Employee;
 import my.innovation.new_projet2.exception.ResourceNotFoundException;
 import my.innovation.new_projet2.mapper.EmployeeMapper;
-import my.innovation.new_projet2.repository.DemandCongeRepository;
+import my.innovation.new_projet2.repository.DemandCongeeRepository;
 import my.innovation.new_projet2.repository.EmployeeRepository;
 import my.innovation.new_projet2.service.DepartmentService;
 import my.innovation.new_projet2.service.EmployeeService;
@@ -21,7 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final DepartmentService departmentService;
-    private DemandCongeRepository demandCongeRepository;
+    private DemandCongeeRepository demandCongeeRepository;
 
 
     @Override
