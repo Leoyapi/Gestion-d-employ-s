@@ -20,12 +20,12 @@ function AcceuilComponent() {
 
   return (
 
-    <div className="acceuil-container" style={{ marginLeft: '50px' }}>
+    <div className="acceuil-container" style={{ marginLeft: '70px' }}>
       <ToastContainer />
 
       {/* Section présentation */}
       <br />
-      <section className="about" style={{ marginLeft: '50px' }}>
+      <section className="about" style={{ marginLeft: '100px' }}>
         <h2>Bienvenue sur notre plateforme</h2>
         <p>
           Notre plateforme est conçue pour optimiser la gestion de vos employés, 
@@ -37,9 +37,9 @@ function AcceuilComponent() {
       <h2 className="my-4 text-center">Tableau de Bord</h2>
 
       {/* Conteneur pour les statistiques principales */}
-      <div className="row" style={{ marginLeft: '50px' }}>
+      <div className="row" style={{ marginLeft: '60px' }}>
         {/* Statistique : Nombre d'employés */}
-        <div className="col-lg-3 col-md-5 mb-4" style={{ marginLeft: '75px' }}>
+        <div className="col-lg-3 col-md-5 mb-3" style={{ marginLeft: '75px' }}>
           <div className="card shadow-sm card-custom-employees">
             <div className="card-body">
               <h5 className="card-title text-center">Nombre total d employés</h5>
@@ -67,7 +67,7 @@ function AcceuilComponent() {
           </div>
         </div>
 
-        <div className="col-lg-2 col-md-4 mb-3">
+        <div className="col-lg-2 col-md-5 mb-3">
           <div className="card shadow-sm card-custom-messages">
             <div className="card-body">
               <h5 className="card-title text-center">Messages non lus</h5>
@@ -78,7 +78,7 @@ function AcceuilComponent() {
       </div>
 
       {/* Section fonctionnalités */}
-      <section className="features" style={{ marginLeft: '55px' }}>
+      <section className="features" style={{ marginLeft: '95px' }}>
         <h2>Nos fonctionnalités</h2>
         <div className="feature-cards">
           <div className="feature-card">

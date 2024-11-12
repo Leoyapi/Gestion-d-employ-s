@@ -19,7 +19,7 @@ function HeaderComponent() {
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
-          <a className="navbar-brand" href="/acceuil" style={{ marginLeft: '50px' }}>
+          <a className="navbar-brand" href="/acceuil" style={{ marginLeft: '75px' }}>
             <h4>Système de gestion des employés</h4>
           </a>
           <button

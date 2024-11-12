@@ -9,6 +9,7 @@ import RegisterComponent from './component/RegisterComponent'
 import LoginComponent from './component/LoginComponent'
 import SidebarComponent from './component/SidebarComponent'
 import AcceuilComponent from './component/AcceuilComponent'
+import DepartmentComponent from './component/DepartmentComponent'
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
 
     <> 
       <BrowserRouter> 
-        <HeaderComponent/> {/* Gardez si nécessaire */}
+        <HeaderComponent/> 
         <div className="d-flex">
           <SidebarComponent/>
           <main className="flex-grow-1">
@@ -27,10 +28,10 @@ function App() {
               <Route path='/add-employee' element={<EmployeeComponent/>} />
               <Route path="/register" element={<RegisterComponent/>} /> 
               <Route path="/login" element={<LoginComponent/>} />
+              <Route path='/departments'element={<DepartmentComponent/>}></Route>
             </Routes>
           </main>
         </div>
-        {/* <FooterComponent/> */}
       </BrowserRouter>
 
     </>
