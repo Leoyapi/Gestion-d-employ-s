@@ -3,9 +3,11 @@ package my.innovation.new_projet2.controller;
 import lombok.AllArgsConstructor;
 import my.innovation.new_projet2.entity.Department;
 import my.innovation.new_projet2.service.DepartmentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,27 +26,19 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
         Department department = departmentService.findById(id);
-        if (department != null) {
-            return ResponseEntity.ok(department);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return department != null ? ResponseEntity.ok(department) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Department> saveDepartment(@RequestBody Department department) {
+    public ResponseEntity<Department> saveDepartment(@Valid @RequestBody Department department) {
         Department createdDepartment = departmentService.save(department);
-        return ResponseEntity.ok(createdDepartment);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdDepartment);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department department) {
+    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @Valid @RequestBody Department department) {
         Department updatedDepartment = departmentService.update(id, department);
-        if (updatedDepartment != null) {
-            return ResponseEntity.ok(updatedDepartment);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return updatedDepartment != null ? ResponseEntity.ok(updatedDepartment) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
