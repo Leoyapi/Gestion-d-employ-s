@@ -38,13 +38,23 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 6.7%; /* Ajuste à 100% pour occuper toute la largeur de la page */
+  height: 70px; /* Ajuste si nécessaire */
   z-index: 1000;
   background-color: #343a40; /* Couleur de fond sombre */
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour séparer visuellement l'en-tête */
-  padding-left: 50px; /* Ajoute un padding à gauche pour le contenu */
-  padding-top: 10px; /* Ajoute un peu d'espace en haut pour le contenu */
-  padding-bottom: 10px; /* Ajoute un peu d'espace en bas pour le contenu */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Liens de navigation */
+.navbar-nav .nav-link {
+  color: white; /* Couleur des liens */
+  padding: 15px; /* Ajuste pour un meilleur clic */
+  display: flex;
+  align-items: center; /* Aligne les icônes avec le texte */
+  transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #adb5bd; /* Couleur au survol */
 }
 
 /* Ajustement pour les éléments de la barre de navigation */
@@ -52,23 +62,16 @@ header {
   margin: 0; /* Supprime la marge par défaut */
 }
 
-
-
 /* Contenu principal */
 .main-content {
-  margin-top: 30px; /* Ajuste la valeur en fonction de la hauteur de ton header */
+  margin-top: 80px; /* Ajuste la valeur en fonction de la hauteur de ton header */
   padding: 20px; /* Ajoute de l'espace autour du contenu principal */
 }
 
-
 /* Styles de navigation */
 .nav-link {
-  display: flex;
-  align-items: center; /* Aligne les icônes avec le texte */
   padding: 10px 15px; /* Ajoute de l'espace autour des liens */
   border-radius: 5px; /* Arrondir les coins */
-  transition: background-color 0.3s ease; /* Transition douce pour l'effet de survol */
-  color: #343a40; /* Couleur de texte foncé */
 }
 
 .nav-link:hover {
@@ -95,4 +98,77 @@ header {
   .main-content {
     margin-top: 60px; /* Ajuste la marge pour les petits écrans */
   }
+}
+
+/* Ajuste la modaledddddddddddddddddddd */
+
+/* Couche de fond semi-transparente */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+/* Contenu de la modale */
+.modal-content {
+  max-width: 600px; /* Largeur maximale de la modale */
+  border-radius: 10px; /* Coins arrondis */
+  overflow: hidden; /* Évite le débordement */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Ombre pour profondeur */
+}
+/* Entête de la modale */
+.modal-header {
+  background-color: #f1f1f1; /* Couleur de fond de l'en-tête */
+  border-bottom: 1px solid #ddd; /* Bordure en bas */
+  padding: 15px; /* Espacement intérieur */
+}
+
+/* Titre de la modale */
+.modal-title {
+  font-size: 1.28rem; /* Taille de police */
+  font-weight: 600; /* Épaisseur du texte */
+}
+
+/* Bouton de fermeture */
+.btn-close {
+  border: none;
+  background: transparent;
+  color: #666; /* Couleur du bouton */
+}
+
+/* Corps de la modale */
+.modal-body {
+  padding: 20px; /* Espacement intérieur */
+}
+
+/* Pied de la modale */
+.modal-footer {
+  padding: 15px; /* Espacement intérieur */
+  display: flex; /* Flexbox pour alignement */
+  justify-content: flex-end; /* Alignement à droite */
+}
+
+.table-row {
+  transition: background-color 0.9s ease; /* Transition douce */
+}
+
+.table-row:hover {
+  background-color: rgba(101, 142, 187, 0.2); /* Couleur de fond lors du survol (légèrement bleuté) */
+  cursor: pointer; /* Change le curseur pour indiquer l'interaction */
+}
+
+/* Optionnel : ajoutez un effet pour les boutons */
+.table-row button {
+  transition: transform 0.2s ease; /* Transition pour les boutons */
+}
+
+.table-row button:hover {
+  transform: scale(1.2); /* Agrandit légèrement le bouton au survol */
 }

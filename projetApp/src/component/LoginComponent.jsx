@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from '../services/UserService'; 
 import { ToastContainer, toast } from 'react-toastify'; 
+import { Spinner } from 'react-bootstrap'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 function LoginComponent() {
-  const [user, setUser] = useState({
-    email: '',
-    password: ''
-  });
+  const [user, setUser] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,30 +14,27 @@ function LoginComponent() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    loginUser(user)
-      .then((response) => {
-        console.log("Connexion réussie:", response);
-        setLoading(false);
-        setUser({ email: '', password: '' });
-        toast.success('Connexion réussie !');
-        navigate("/acceuil"); // Redirection après succès
-      })
-      .catch((error) => {
-        setLoading(false);
-        const message = error.message || "Une erreur s'est produite.";
-        toast.error(message); // Affiche le message d'erreur via un toast
-      });
+    try {
+      const response = await loginUser(user);
+      console.log("Connexion réussie:", response);
+      setUser({ email: '', password: '' });
+      toast.success('Connexion réussie !');
+      navigate("/acceuil");
+    } catch (error) {
+      const message = error.response?.data?.message || "Une erreur s'est produite lors de la connexion.";
+      toast.error(message); 
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="container" style={{ width: '50%' }}>
-      <br />
-      <br />
-      <br />
+      <br /><br /><br /><br />
       <div className="row">
         <div className="card col-md-6 offset-md-3">
           <h2 className="text-center">Connexion</h2>
@@ -75,7 +70,13 @@ function LoginComponent() {
 
             <div className="d-flex justify-content-center">
               <button type="submit" className="btn btn-success w-47" disabled={loading}>
-                {loading ? "Connexion en cours..." : "Se connecter"}
+                {loading ? (
+                  <>
+                    <Spinner animation="border" size="sm" /> Connexion en cours...
+                  </>
+                ) : (
+                  "Se connecter"
+                )}
               </button>
             </div>
 

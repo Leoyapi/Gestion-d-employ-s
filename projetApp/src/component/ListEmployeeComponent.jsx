@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { listEmployees, addEmployee, updateEmployee, deleteEmployee } from "../services/EmployeeService";
+import { getAllDepartments }  from "../services/DepartmentService";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 const ListEmployeeComponent = () => {
@@ -16,25 +17,46 @@ const ListEmployeeComponent = () => {
   const [currentEmployee, setCurrentEmployee] = useState(null);
 
     // État pour stocker les données de l'employé à ajouter ou à éditer
-  const [employeeData, setEmployeeData] = useState({ firstName: '', lastName: '', email: '' });
+  const [employeeData, setEmployeeData] = useState({ firstName: '', lastName: '',departmentId: '', email: '' });
     // État pour stocker un message de succès après une opération réussie
 
   const [employeeToDelete, setEmployeeToDelete] = useState(null); 
+
+  const [departments, setDepartments] = useState([]); // New state for departments
+
 
     // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
 
   const employeesPerPage = 11; // Afficher 11 employés par page
 
-  // Utilisation du hook useEffect pour récupérer la liste des employés au chargement du composant
   useEffect(() => {
-    listEmployees() // Appel au service pour lister les employés
-      .then((response) => {
-        const sortedEmployees = response.sort((a, b) => b.id - a.id); // Trier par ID décroissant
-        setEmployees(sortedEmployees); // Mettre à jour l'état avec la liste triée
-    }) // Mettre à jour l'état avec les employés récupérés
-      .catch(() => toast.error("Erreur lors de la récupération des employés"));
-  }, []);  // Le tableau vide [] signifie que l'effet se déclenche seulement lors du premier rendu
+    // Récupérer la liste des départements et des employés
+    Promise.all([listEmployees(), getAllDepartments()])
+      .then(([employeesResponse, departmentsResponse]) => {
+        // Tri des employés par ID décroissant
+        const sortedEmployees = employeesResponse.sort((a, b) => b.id - a.id);
+  
+        // Associer chaque employé à son département
+        const employeesWithDepartments = sortedEmployees.map((employee) => {
+          // Trouver le département correspondant à l'ID du département
+          const department = departmentsResponse.find((dept) => dept.id === employee.departmentId);
+          return {
+            ...employee,
+            departmentName: department ? department.name : 'Non assigné',
+          };
+        });
+  
+        // Mettre à jour l'état des employés avec les départements associés
+        setEmployees(employeesWithDepartments);
+        // Mettre à jour l'état des départements
+        setDepartments(departmentsResponse);
+      })
+      .catch(() => {
+        toast.error("Erreur de récupération des employés ou des départements");
+      });
+  }, []);  // Ce useEffect se déclenche une seule fois, lors du premier rendu du composant
+  
 
   // Fonction pour gérer les changements dans les champs du formulaire
   const handleInputChange = (e) => {
@@ -59,21 +81,34 @@ const saveNewEmployee = (e) => {
   addEmployee(employeeData)
       .then(() => {
           setShowModal(false);
-          setEmployeeData({ firstName: '', lastName: '', email: '' });
-          toast.success("L'employé a été ajouté avec succès."); // Message de succès avec Toast
-          return listEmployees();
-      })
+          setEmployeeData({ firstName: '', lastName: '', departmentId: '', email: '' });
+          toast.success("L'employé a été ajouté avec succès.");
+
+          return listEmployees(); // Récupérer à nouveau la liste des employés après l'ajout
+      })        
       .then((response) => {
+          // Trier les employés par ID décroissant
           const sortedEmployees = response.sort((a, b) => b.id - a.id);
-          setEmployees(sortedEmployees);
+
+          // Associer les employés à leurs départements respectifs
+          const employeesWithDepartments = sortedEmployees.map((employee) => {
+              const department = departments.find((dept) => dept.id === employee.departmentId);
+              return {
+                  ...employee,
+                  departmentName: department ? department.name : 'Non assigné', // Si le département est trouvé, assigner son nom
+              };
+          });
+
+          // Mettre à jour l'état des employés avec les départements associés
+          setEmployees(employeesWithDepartments);
       })
       .catch((err) => {
           console.error("Erreur lors de l'enregistrement:", err);
 
           if (err.response && err.response.data && err.response.data.message) {
-              toast.error(err.response.data.message); // Message d'erreur spécifique avec Toast
+              toast.error(err.response.data.message);
           } else {
-              toast.error("Erreur,Votre email existe déjà."); // Message d'erreur par défaut avec Toast
+              toast.error("Erreur, votre email existe déjà.");
           }
       });
 };
@@ -81,31 +116,42 @@ const saveNewEmployee = (e) => {
   // Fonction pour ouvrir la fenêtre modale en mode édition
   const handleEdit = (employee) => {  
     setCurrentEmployee(employee); // Stocker l'employé actuel pour l'édition
-    setEmployeeData({ firstName: employee.firstName, lastName: employee.lastName, email: employee.email }); // Pré-remplir le formulaire
+    setEmployeeData({ firstName: employee.firstName, lastName: employee.lastName,email: employee.email }); // Pré-remplir le formulaire
     setEditMode(true); // Activer le mode édition
     setShowModal(true); // Ouvrir la fenêtre modale
   };
 
-  // Fonction pour enregistrer les modifications d'un employé
   const saveEditedEmployee = (e) => {
     e.preventDefault();
-    updateEmployee(currentEmployee.id, employeeData)
+    updateEmployee(currentEmployee.id, employeeData) // Mettre à jour l'employé avec les données actuelles
         .then(() => {
             setShowModal(false);
             setEditMode(false);
-            toast.success("L'employé a été modifié avec succès."); // Message de succès avec Toast
-            return listEmployees();
+            toast.success("L'employé a été modifié avec succès."); 
+
+            return listEmployees(); // Récupérer à nouveau la liste des employés après modification
         })
         .then((response) => {
+            // Trier les employés par ID décroissant
             const sortedEmployees = response.sort((a, b) => b.id - a.id);
-            setEmployees(sortedEmployees);
+
+            // Associer les employés à leurs départements respectifs
+            const employeesWithDepartments = sortedEmployees.map((employee) => {
+                const department = departments.find((dept) => dept.id === employee.departmentId);
+                return {
+                    ...employee,
+                    departmentName: department ? department.name : 'Non assigné', // Si le département est trouvé, assigner son nom
+                };
+            });
+
+            // Mettre à jour l'état des employés avec les départements associés
+            setEmployees(employeesWithDepartments);
         })
         .catch((err) => {
             console.error("Erreur lors de la modification:", err);
-            toast.error("Une erreur s'est produite lors de la modification de l'employé."); // Message d'erreur avec Toast
+            toast.error("Une erreur s'est produite lors de la modification de l'employé.");
         });
 };
-
 
   // Ouvrir la modale de suppression
   const handleDeleteClick = (employeeId) => {
@@ -117,7 +163,7 @@ const saveNewEmployee = (e) => {
   const confirmDelete = () => {
     deleteEmployee(employeeToDelete)
         .then(() => {
-            toast.success("L'employé a été supprimé avec succès."); // Message de succès avec Toast
+            toast.success("L'employé a été supprimé avec succès."); 
             setShowDeleteModal(false);
             return listEmployees();
         })
@@ -127,17 +173,14 @@ const saveNewEmployee = (e) => {
         })
         .catch((err) => {
             console.error("Erreur lors de la suppression:", err);
-            toast.error("Une erreur s'est produite lors de la suppression de l'employé."); // Message d'erreur avec Toast
+            toast.error("Une erreur s'est produite lors de la suppression de l'employé."); 
         });
 };
 
   return (
 
    <div className="container-fluid">
-      <br />
-      <br />
-      <br />
-      <br />
+      <br /> <br /><br /><br />
   <div className="container">
 
   {/* Title for Employee List */}
@@ -149,59 +192,63 @@ const saveNewEmployee = (e) => {
   <div className="mb-3">
     <button
       className="btn btn-primary"
-      style={{ marginLeft: '50px' }} // Ajoute une marge à gauche
+      style={{ marginLeft: '70px' }} 
       onClick={() => {
         setShowModal(true);
         setEditMode(false);
-        setEmployeeData({ firstName: '', lastName: '', email: '' });
+        setEmployeeData({ firstName: '', lastName: '',departmentId: '', email: '' });
       }}
     >
       <i className="fa-solid fa-plus"></i> Nouveau
     </button>
   </div>
     {/* Employee Table */}
-    <div className="table-container" style={{width: '115%', margin: '0 auto' }}>
-        <table className="table table-striped table-bordered"
-          style={{
-            margin: '0 auto',
-            width: '95%', // Augmentation de la largeur du tableau
-          }}
-        >
-          <thead style={{ position: 'sticky', top: '0', backgroundColor: '#fff', zIndex: '1' }}>
-            <tr>
-              <th className="text-center">N°</th>
-              <th className="text-center">Nom</th>
-              <th className="text-center">Prénom</th>
-              <th className="text-center">Email</th>
-              <th className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentEmployees.length > 0 ? (
-              currentEmployees.map((employee, index) => (
-                <tr key={employee.id}>
-                  <td className="text-center">{indexOfFirstEmployee + index + 1}</td>
-                  <td className="text-center">{employee.firstName}</td>
-                  <td className="text-center">{employee.lastName}</td>
-                  <td className="text-center">{employee.email}</td>
-                  <td className="text-center">
-                    <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(employee)}>
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(employee.id)}>
-                      <i className="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center">Aucun employé trouvé</td>
+    <div className="table-container" style={{ width: '114%', margin: '0 auto' }}>
+      <table
+        className="table table-striped table-bordered"
+        style={{
+          margin: '0 auto',
+          width: '91%',
+        }}
+      >
+        <thead style={{ position: 'sticky', top: '0', backgroundColor: '#fff', zIndex: '1' }}>
+          <tr>
+            <th className="text-center">N°</th>
+            <th className="text-center">Nom</th>
+            <th className="text-center">Prénom</th>
+            <th className="text-center">Département</th>
+            <th className="text-center">Email</th>
+            <th className="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentEmployees.length > 0 ? (
+            currentEmployees.map((employee, index) => (
+              <tr key={employee.id} className="table-row">
+                <td className="text-center">{indexOfFirstEmployee + index + 1}</td>
+                <td className="text-center">{employee.firstName}</td>
+                <td className="text-center">{employee.lastName}</td>
+                <td className="text-center">{employee.departmentName || 'Non assigné'}</td>
+                <td className="text-center">{employee.email}</td>
+                <td className="text-center">
+                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(employee)}>
+                    <i className="fas fa-edit"></i>
+                  </button>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(employee.id)}>
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                </td>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="text-center">Aucun employé trouvé</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+
             {/* Pagination */}
       <div className="pagination justify-content-center mt-3">
         {Array.from({ length: Math.ceil(employees.length / employeesPerPage) }, (_, i) => (
@@ -219,7 +266,7 @@ const saveNewEmployee = (e) => {
 
       {/* Modale de suppression */}
       {showDeleteModal && (
-        <div className="modal show d-block" tabIndex="-1">
+        <div className="modal show d-block custom-modal-overlay" tabIndex="-1">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -241,10 +288,10 @@ const saveNewEmployee = (e) => {
      {/* Modale d'ajout/édition */}
       
       {showModal && (
-        <div className="modal show d-block" tabIndex="-1" >
-          <div className="modal-dialog" >
-            <div className="modal-content" style={{width:'85%'}}>
-              <div className="modal-header" style={{background:'#d7e3e3'}}>
+        <div className="modal show d-block custom-modal-overlay" tabIndex="-1" >
+          <div className="modal-dialog modal-dialog-centered" >
+            <div className="modal-content">
+              <div className="modal-header" >
                 <h5 className="modal-title">{editMode ? 'Modifier un employé' : 'Ajouter un nouvel employé'}</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
@@ -273,6 +320,23 @@ const saveNewEmployee = (e) => {
                     />
                   </div>
                   <div className="mb-3">
+                  <label className="form-label">Département</label>
+                  <select
+                    name="departmentId"
+                    className="form-control"
+                    value={employeeData.departmentId || ''}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Sélectionner un département</option>
+                    {departments.map((dept) => (
+                      <option key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                  <div className="mb-3">
                     <label className="form-label">Email</label>
                     <input
                       type="email"
@@ -283,16 +347,16 @@ const saveNewEmployee = (e) => {
                       required
                     />
                   </div> 
-                    <button type="submit" className="btn btn-success" style={{ marginRight: '10px' }}>
-                      <i className="fa-solid fa-square-check"></i>
-                      {editMode ? 'Modifier' : 'Enregistrer'}
+                  <div className="modal-footer">
+                    <button type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setShowModal(false)}>
+                      Fermer
                     </button>
-                    <button type="submit" className="btn btn-secondary"                
-                          onClick={(event) => {
-                            event.preventDefault(); // Empêche la soumission si ce bouton est cliqué
-                            setShowModal(false);
-                          }} > Fermer 
+                    <button type="submit" className="btn btn-primary">
+                      {editMode ? 'Mettre à jour' : 'Ajouter'}
                     </button>
+                  </div>
                 </form>
               </div>
             </div>
